@@ -85,14 +85,17 @@ h1 {
 }
 
 .answer-buttons-container {
-  margin-bottom: 25px;
+  margin-bottom: 45px;
 }
 
 .counters {
   font-size: 16px;
-  display: flex;
-  justify-content: space-between;
 }
+
+.counters > span + span {
+  margin-left: 35px;
+}
+
 #counterTotalSpan {
   color: rgb(0,83,199);
 }

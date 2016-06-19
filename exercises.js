@@ -46,14 +46,12 @@ var practiceWindow = document.getElementById("practiceWindow"),
   ("answer-buttons-container")[0],
 //кнопки ответа:
   answerButtons = answerButtonsContainer.getElementsByTagName("button"),
-//span'ы для счётчика всех ответов, а также правильных и неправильных ответов:
-  counterTotalSpan = document.getElementById("counterTotalSpan"),
+//span'ы для счётчика правильных и неправильных ответов:
   counterCorrectSpan = document.getElementById("counterCorrectSpan"),
   counterIncorrectSpan = document.getElementById("counterIncorrectSpan");
 
-//счётчик всех ответов, а также правильных и неправильных ответов:
-var counterAnswersTotal = 0,
-  counterAnswersCorrect = 0,
+//счётчики правильных и неправильных ответов:
+var counterAnswersCorrect = 0,
   counterAnswersIncorrect = 0;
 
 //здесь будет храниться  случайное слово из массива и название массива,
@@ -73,16 +71,16 @@ document.addEventListener("DOMContentLoaded", function(){
     answerButtons[i].addEventListener("click", function (event) {
       event.preventDefault();
 
-      //делаем неактивными все кнопки ответа (до тех пор, пока на экране
-      //не появится новое слово или не выйдет сообщение "неверный ответ"):
-      for (var j = 0; j < answerButtons.length; j++) {
-        answerButtons[j].setAttribute("disabled", "disabled");
-      }
-
       var answer = this.getAttribute("data-answer");
 
       //если ответ верный:
       if (answer === parentOfTheElementName) {
+        //делаем неактивными все кнопки ответа (до тех пор, пока на экране
+        //не появится новое слово:
+        for (var j = 0; j < answerButtons.length; j++) {
+          answerButtons[j].setAttribute("disabled", "disabled");
+        }
+
         //сначала удаляем класс видимости оповещ. о неправильном ответе,
         //если он есть
         invalidAnswerSign.classList.remove("invalid-visible");
@@ -93,8 +91,7 @@ document.addEventListener("DOMContentLoaded", function(){
         //показываем зелёную галочку после аффикса
         validAnswerSign.classList.add("valid-sign-visible");
 
-        //увеличиваем соотв. счётчики
-        counterTotalSpan.innerHTML = ++counterAnswersTotal;
+        //увеличиваем соотв. счётчик
         counterCorrectSpan.innerHTML = ++counterAnswersCorrect;
 
         //через пару секунд выводим новое слово вместо старого
@@ -120,8 +117,7 @@ document.addEventListener("DOMContentLoaded", function(){
         //если он есть
         invalidAnswerSign.classList.remove("invalid-visible");
 
-        //увеличиваем соотв. счётчики
-        counterTotalSpan.innerHTML = ++counterAnswersTotal;
+        //увеличиваем соотв. счётчик
         counterIncorrectSpan.innerHTML = ++counterAnswersIncorrect;
 
         //добавляем тот же класс с задержкой на неск миллискеунд, чтобы
@@ -130,12 +126,8 @@ document.addEventListener("DOMContentLoaded", function(){
         setTimeout(
           function(){
             invalidAnswerSign.classList.add("invalid-visible");
-            for (j = 0; j < answerButtons.length; j++) {
-              answerButtons[j].removeAttribute("disabled");
-            }
           }, 300
         );
-
 
       }
     })
